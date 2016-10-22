@@ -1,13 +1,20 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
+
+import com.google.common.base.Optional;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import utils.Serializer;
-
-import com.google.common.base.Optional;
-
 import models.Activity;
 import models.Location;
 import models.User;
@@ -17,8 +24,8 @@ public class PacemakerAPI
   private Map<Long, User>     userIndex       = new HashMap<>();
   private Map<String, User>   emailIndex      = new HashMap<>();
   private Map<Long, Activity> activitiesIndex = new HashMap<>();
-  
-private Serializer serializer;
+      
+  private Serializer serializer;
   
   public PacemakerAPI(Serializer serializer)
   {
@@ -41,26 +48,26 @@ private Serializer serializer;
     serializer.push(activitiesIndex);
     serializer.write(); 
   }
-
+  
   public Collection<User> getUsers ()
   {
     return userIndex.values();
   }
-
+  
   public  void deleteUsers() 
   {
     userIndex.clear();
     emailIndex.clear();
   }
-
+  
   public User createUser(String firstName, String lastName, String email, String password) 
   {
     User user = new User (firstName, lastName, email, password);
     userIndex.put(user.id, user);
     emailIndex.put(email, user);
     return user;
-  } 
-
+  }
+  
   public User getUserByEmail(String email) 
   {
     return emailIndex.get(email);
@@ -76,7 +83,7 @@ private Serializer serializer;
     User user = userIndex.remove(id);
     emailIndex.remove(user.email);
   }
-
+  
   public void createActivity(Long id, String type, String location, double distance)
   {
     Activity activity = new Activity (type, location, distance);
@@ -102,6 +109,3 @@ private Serializer serializer;
     }
   }
 }
-
-
-

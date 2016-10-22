@@ -9,16 +9,15 @@ import com.google.common.base.Objects;
 
 public class User 
 {
+  static Long   counter = 0l;
+  
+  public Long   id;
   public String firstName;
   public String lastName;
   public String email;
   public String password;
   
   public Map<Long, Activity> activities = new HashMap<>();
-  
-  static Long   counter = 0l;
-
-  public Long   id;
   
   public User()
   {
@@ -28,9 +27,9 @@ public class User
   {
     this.id        = counter++;
     this.firstName = firstName;
-    this.lastName = lastName;
-    this.email = email;
-    this.password = password;
+    this.lastName  = lastName;
+    this.email     = email;
+    this.password  = password;
   }
   
   @Override
@@ -48,6 +47,6 @@ public class User
   @Override  
   public int hashCode()  
   {  
-     return Objects.hashCode(this.lastName, this.firstName, this.email, this.password);  
+     return Objects.hashCode(this.id, this.lastName, this.firstName, this.email, this.password);  
   }  
 }

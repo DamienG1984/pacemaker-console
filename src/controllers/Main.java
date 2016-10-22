@@ -16,14 +16,13 @@ import com.google.common.base.Optional;
 
 public class Main
 {
- 
   public PacemakerAPI paceApi;
   
   public Main() throws Exception
   {
     File  datastore = new File("datastore.xml");
     Serializer serializer = new XMLSerializer(datastore);
-
+    
     paceApi = new PacemakerAPI(serializer);
     if (datastore.isFile())
     {
@@ -38,20 +37,20 @@ public class Main
     paceApi.createUser(firstName, lastName, email, password);
   }
   
-  @Command(description="Create a new User")
+  @Command(description="Get a Users detail")
   public void getUser (@Param(name="email") String email)
   {
     User user = paceApi.getUserByEmail(email);
     System.out.println(user);
   }
   
-  @Command(description="Create a new User")
+  @Command(description="Get all users details")
   public void getUsers ()
   {
     Collection<User> users = paceApi.getUsers();
     System.out.println(users);
   }
-
+  
   @Command(description="Delete a User")
   public void deleteUser (@Param(name="email") String email)
   {
@@ -83,21 +82,14 @@ public class Main
       paceApi.addLocation(activity.get().id, latitude, longitude);
     }
   }
-
-/*  public static void main(String[] args) throws Exception
-  {
-    Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", new Main());
-    shell.commandLoop(); 
-  }*/
-
-
+  
   public static void main(String[] args) throws Exception
   {
     Main main = new Main();
 
     Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions", main);
     shell.commandLoop();
-
+    
     main.paceApi.store();
   }
 }
