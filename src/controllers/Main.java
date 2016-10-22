@@ -3,6 +3,8 @@ package controllers;
 import java.io.File;
 import java.util.Collection;
 
+import utils.Serializer;
+import utils.XMLSerializer;
 import models.Activity;
 import models.User;
 import asg.cliche.Command;
@@ -14,7 +16,20 @@ import com.google.common.base.Optional;
 
 public class Main
 {
-  PacemakerAPI paceApi = new PacemakerAPI();
+ 
+  public PacemakerAPI paceApi;
+  
+  public Main() throws Exception
+  {
+    File  datastore = new File("datastore.xml");
+    Serializer serializer = new XMLSerializer(datastore);
+
+    paceApi = new PacemakerAPI(serializer);
+    if (datastore.isFile())
+    {
+      paceApi.load();
+    }
+  }
   
   @Command(description="Create a new User")
   public void createUser (@Param(name="first name") String firstName, @Param(name="last name") String lastName, 
@@ -69,9 +84,20 @@ public class Main
     }
   }
 
-  public static void main(String[] args) throws Exception
+/*  public static void main(String[] args) throws Exception
   {
     Shell shell = ShellFactory.createConsoleShell("pc", "Welcome to pcemaker-console - ?help for instructions", new Main());
     shell.commandLoop(); 
+  }*/
+
+
+  public static void main(String[] args) throws Exception
+  {
+    Main main = new Main();
+
+    Shell shell = ShellFactory.createConsoleShell("pm", "Welcome to pacemaker-console - ?help for instructions", main);
+    shell.commandLoop();
+
+    main.paceApi.store();
   }
 }

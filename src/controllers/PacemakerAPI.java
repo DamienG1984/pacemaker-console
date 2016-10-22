@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import utils.Serializer;
+
 import com.google.common.base.Optional;
 
 import models.Activity;
@@ -15,6 +17,30 @@ public class PacemakerAPI
   private Map<Long, User>     userIndex       = new HashMap<>();
   private Map<String, User>   emailIndex      = new HashMap<>();
   private Map<Long, Activity> activitiesIndex = new HashMap<>();
+  
+private Serializer serializer;
+  
+  public PacemakerAPI(Serializer serializer)
+  {
+    this.serializer = serializer;
+  }
+  
+  @SuppressWarnings("unchecked")
+  void load() throws Exception
+  {
+    serializer.read();
+    userIndex       = (Map<Long, User>)     serializer.pop();
+    emailIndex      = (Map<String, User>)   serializer.pop();
+    activitiesIndex = (Map<Long, Activity>) serializer.pop();
+  }
+  
+  void store() throws Exception
+  {
+    serializer.push(userIndex);
+    serializer.push(emailIndex);
+    serializer.push(activitiesIndex);
+    serializer.write(); 
+  }
 
   public Collection<User> getUsers ()
   {
@@ -76,4 +102,6 @@ public class PacemakerAPI
     }
   }
 }
+
+
 
