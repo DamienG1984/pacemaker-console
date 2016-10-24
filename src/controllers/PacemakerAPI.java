@@ -1,6 +1,6 @@
 package controllers;
 
-import java.io.File;
+/*import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.ObjectInputStream;
@@ -17,7 +17,18 @@ import java.util.Map;
 import utils.Serializer;
 import models.Activity;
 import models.Location;
+import models.User;*/
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.common.base.Optional;
+
+import models.Activity;
+import models.Location;
 import models.User;
+import utils.Serializer;
 
 public class PacemakerAPI
 {

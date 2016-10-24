@@ -1,34 +1,24 @@
 package controllers;
 
-import java.io.File;
 import java.util.Collection;
 
-import utils.Serializer;
-import utils.XMLSerializer;
-import models.Activity;
-import models.User;
+import com.google.common.base.Optional;
+
+import java.io.File;
 import asg.cliche.Command;
 import asg.cliche.Param;
 import asg.cliche.Shell;
 import asg.cliche.ShellFactory;
-
-import com.google.common.base.Optional;
+import models.Activity;
+import models.User;
+import utils.BinarySerializer;
+import utils.JSONSerializer;
+import utils.Serializer;
+import utils.XMLSerializer;
 
 public class Main
 {
   public PacemakerAPI paceApi;
-  
-  public Main() throws Exception
-  {
-    File  datastore = new File("datastore.xml");
-    Serializer serializer = new XMLSerializer(datastore);
-    
-    paceApi = new PacemakerAPI(serializer);
-    if (datastore.isFile())
-    {
-      paceApi.load();
-    }
-  }
   
   @Command(description="Create a new User")
   public void createUser (@Param(name="first name") String firstName, @Param(name="last name") String lastName, 
@@ -44,6 +34,14 @@ public class Main
     System.out.println(user);
   }
   
+  @Command(description="Get a Users detail By ID")
+  public void ListUserID (@Param(name="id") Long id)
+  {
+    User user = paceApi.getUser(id);
+    System.out.println(user);
+  }
+  
+  
   @Command(description="Get all users details")
   public void getUsers ()
   {
@@ -52,9 +50,9 @@ public class Main
   }
   
   @Command(description="Delete a User")
-  public void deleteUser (@Param(name="email") String email)
+  public void deleteUser (@Param(name="id") Long id)
   {
-    Optional<User> user = Optional.fromNullable(paceApi.getUserByEmail(email));
+    Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
     if (user.isPresent())
     {
       paceApi.deleteUser(user.get().id);
@@ -80,6 +78,27 @@ public class Main
     if (activity.isPresent())
     {
       paceApi.addLocation(activity.get().id, latitude, longitude);
+    }
+  }
+  
+  public Main() throws Exception
+  {
+  //XML Serializer
+    //File  datastore = new File("datastore.xml");
+      //Serializer serializer = new XMLSerializer(datastore);
+
+      //JSON Serializer
+      //File  datastore = new File("datastore.json");
+      //Serializer serializer = new JSONSerializer(datastore);
+      
+    //Binary Serializer
+    File  datastore = new File("datastore.txt");
+    Serializer serializer = new BinarySerializer(datastore);
+    
+    paceApi = new PacemakerAPI(serializer);
+    if (datastore.isFile())
+    {
+      paceApi.load();
     }
   }
   
