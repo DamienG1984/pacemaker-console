@@ -1,0 +1,15 @@
+Table -> http://bethecoder.com/applications/products/asciiTable.action
+
+Compare -> https://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/
+
+Compare Double issue -> http://stackoverflow.com/questions/4242023/comparator-with-double-type
+
+start time -> http://stackoverflow.com/questions/6252678/converting-a-date-string-to-a-datetime-object-using-joda-time-library
+
+adding joda Datetime -> http://stackoverflow.com/questions/15675173/adding-joda-time
+
+duration joda time -> http://stackoverflow.com/questions/18604408/convert-java-string-to-time-not-date
+
+surpress raw type -> http://stackoverflow.com/questions/20949686/how-to-disable-warning-in-eclipse-class-is-a-raw-type-references-to-generic
+
+surpess multiple warnings http://stackoverflow.com/questions/13070260/combining-multiple-suppresswarnings-annotations-eclipse-indigo

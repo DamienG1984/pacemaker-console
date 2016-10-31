@@ -6,10 +6,6 @@ import com.google.common.base.Optional;
 
 import java.io.File;
 
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.*;
 
 import asg.cliche.Command;
@@ -51,6 +47,7 @@ public class Main
   {
     User user = paceApi.getUserByEmail(email);
     if (user != null) {
+      System.out.println("User Found");
       List<User> usrLst = Arrays.asList(user);
       //pass user details to user table method to be printed.
         paceApi.usrtbl(usrLst);
@@ -62,11 +59,12 @@ public class Main
   }
   
   @Command(description="Get a Users detail By ID")
-  public void ListUserID (@Param(name="id") Long id)
+  public void ListUser (@Param(name="id") Long id)
   {
     User user = paceApi.getUser(id);
     
     if (user != null) {
+      System.out.println("User Found");
       List<User> usrLst = Arrays.asList(user);
     //pass user details to user table method to be printed.
       paceApi.usrtbl(usrLst);
@@ -92,16 +90,17 @@ public class Main
     }
   }
   
-  @Command(description = "List a users activities sortBy: type, location, distance")
+  @Command(description = "List a users activities sortBy: type, location, distance, starttime, duration")
+  @SuppressWarnings( "static-access")
   public void listActivities(@Param(name = "user id") Long id,
-      @Param(name = "sortBy: type, location, distance") String sortBy)
+      @Param(name = "sortBy: type, location, distance, starttime, duration") String sortBy)
   {
     Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
     if (user.isPresent())
     {
     Map<Long, Activity> activity = paceApi.getUserActivity(user.get().id);
     List<Activity> actLst = new ArrayList<>(activity.values());
-   
+
       if (sortBy.equals ("type"))
         {
           Collections.sort(actLst, paceApi.srtType);
@@ -109,7 +108,7 @@ public class Main
         }
       else
          if (sortBy.equals ("location"))
-         {
+         { 
            Collections.sort(actLst, paceApi.srtLocation);
            paceApi.actLst(actLst);
          }
@@ -120,7 +119,19 @@ public class Main
              paceApi.actLst(actLst);
            }
            else
-             System.out.println("Not a valid Sort By Option, Please use type, location or distance");
+             if (sortBy.equals ("starttime"))
+             {
+               Collections.sort(actLst, paceApi.srtStarttime);
+               paceApi.actLst(actLst);
+             }
+             else
+               if (sortBy.equals ("duration"))
+               {
+                 Collections.sort(actLst, paceApi.srtDuration);
+                 paceApi.actLst(actLst);
+               }
+           else
+             System.out.println("Not a valid Sort By Option, Please use type, location, distance, starttime or duration");
     }
   }
   
@@ -137,12 +148,13 @@ public class Main
   
   @Command(description="Add an activity")
   public void addActivity (@Param(name="user-id")  Long   id,       @Param(name="type") String type, 
-                           @Param(name="location") String location, @Param(name="distance") double distance)
+                           @Param(name="location") String location, @Param(name="distance") double distance,
+                           @Param(name="starttime") String starttime, @Param(name="duration") String duration)
   {
     Optional<User> user = Optional.fromNullable(paceApi.getUser(id));
     if (user.isPresent())
     {
-      paceApi.createActivity(id, type, location, distance);
+      paceApi.createActivity(id, type, location, distance, starttime, duration);
     }
   }
   
@@ -156,16 +168,12 @@ public class Main
       paceApi.addLocation(activity.get().id, latitude, longitude);
     }
   }
-  
+
   public Main() throws Exception
   {
-  //XML Serializer Default
+  //XML Default
     File  datastore = new File("datastore.xml");
     Serializer serializer = new XMLSerializer(datastore);
-      
-    //Binary Serializer
-   //File  datastore = new File("datastore.txt");
-   //Serializer serializer = new BinarySerializer(datastore);
     
     paceApi = new PacemakerAPI(serializer);
     if (datastore.isFile())

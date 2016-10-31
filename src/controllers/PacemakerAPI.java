@@ -16,6 +16,9 @@ import com.bethecoder.ascii_table.impl.CollectionASCIITableAware;
 import com.bethecoder.ascii_table.spec.IASCIITableAware;
 import com.google.common.base.Optional;
 
+import org.joda.time.*;
+import org.joda.time.format.*;
+
 
 public class PacemakerAPI
 {
@@ -54,6 +57,7 @@ public class PacemakerAPI
     return emailIndex.get(email);
   }
   
+  @SuppressWarnings( {"rawtypes", "unchecked" })
   public void usrtbl(List usr) 
   {
   /*  String[][] users = { 
@@ -70,10 +74,11 @@ public class PacemakerAPI
     ASCIITable.getInstance().printTable(asciiTableAware);
   }
   
+  @SuppressWarnings( {"rawtypes", "unchecked" })
   public void actLst(List actLst) 
   {          
     //System.out.println(actLst);
-    IASCIITableAware asciiTableAware = new CollectionASCIITableAware<Activity>(actLst,"id","type","location","distance","route"); 
+    IASCIITableAware asciiTableAware = new CollectionASCIITableAware<Activity>(actLst,"id","type","location","distance","starttime","duration","route"); 
     ASCIITable.getInstance().printTable(asciiTableAware);
   }
   
@@ -88,17 +93,29 @@ public class PacemakerAPI
     emailIndex.remove(user.email);
   }
   
-  public Activity createActivity(Long id, String type, String location, double distance)
+  public Activity createActivity(Long id, String type, String location, double distance, String starttime, String duration)
   {
     Activity activity = null;
     Optional<User> user = Optional.fromNullable(userIndex.get(id));
     if (user.isPresent())
     {
-      activity = new Activity (type, location, distance);
+      activity = new Activity (type, location, distance, this.Starttime(starttime), this.Duration(duration));
       user.get().activities.put(activity.id, activity);
       activitiesIndex.put(activity.id, activity);
     }
     return activity;
+  }
+  
+  public String Starttime (String starttime)
+  {
+    DateTime date = DateTime.parse(starttime,DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss"));
+    return date.toString();
+  }
+  
+  public String Duration (String duration)
+  {
+    LocalTime time = LocalTime.parse(duration);
+    return time.toString();
   }
   
   public Activity getActivity (Long id)
@@ -146,8 +163,26 @@ public class PacemakerAPI
       return Double.compare(act2.distance,act1.distance);
     }
   };
-           
+  
+  public static Comparator<Activity> srtStarttime = new Comparator<Activity>()
+      {
+        @Override
+        public int compare(Activity act1, Activity act2)
+        {
+          return act2.starttime.compareTo(act1.starttime);
+        }
+      };
+  
+  public static Comparator<Activity> srtDuration = new Comparator<Activity>()
+      {
+        @Override
+        public int compare(Activity act1, Activity act2)
+        {
+          return act2.duration.compareTo(act1.duration);
+        }
+      };
 
+ @SuppressWarnings("unchecked")
   public void load() throws Exception
   {
     serializer.read();

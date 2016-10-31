@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.google.common.base.Objects;
 
+@SuppressWarnings( "serial")
 public class User implements Serializable
 {
   static Long   counter = 0l;
