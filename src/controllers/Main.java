@@ -92,7 +92,7 @@ public class Main
     }
   }
   
-  @Command(description = "Sort a users activities sortBy: type, location, distance")
+  @Command(description = "List a users activities sortBy: type, location, distance")
   public void listActivities(@Param(name = "user id") Long id,
       @Param(name = "sortBy: type, location, distance") String sortBy)
   {
@@ -162,10 +162,6 @@ public class Main
   //XML Serializer Default
     File  datastore = new File("datastore.xml");
     Serializer serializer = new XMLSerializer(datastore);
-
-      //JSON Serializer
-      //File  datastore = new File("datastore.json");
-      //Serializer serializer = new JSONSerializer(datastore);
       
     //Binary Serializer
    //File  datastore = new File("datastore.txt");
