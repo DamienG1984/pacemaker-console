@@ -16,7 +16,7 @@ The application has the following Features:
 + lu list-user (email)
 + lius list-user (id)
 + la list-activities (userid, sortBy: type, location, distance, date, duration)
-+ la list-activities (user id)
++ la list-activities (user id)   
 + du delete-user (id)
 + aa add-activity (user-id, type, location, distance, datetime, duration)
 + al add-location (activity-id, latitude, longitude)

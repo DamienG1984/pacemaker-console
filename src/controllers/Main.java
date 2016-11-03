@@ -24,7 +24,7 @@ public class Main
   public PacemakerAPI paceApi;
   
   @Command(description="Get all users details")
-  public void ListUsers ()
+  public void ListUsers () 
   {
     Collection<User> users = paceApi.getUsers();
     //System.out.println(users);
