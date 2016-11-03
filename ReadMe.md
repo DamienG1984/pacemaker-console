@@ -24,12 +24,10 @@ The application has the following Features:
 + l load ()
 + s store ()
 
-
+ 
 
 ### Overview
-Data persistence was achived using Serialization with the ability to store data in two different file formats (JSON,XML). The output of this project is displayed in the java console, results are displayed in tabular format using IASCIITableAware. The application uses the MAVEN build framework. 
-
-JUINT was used to develop test cases for the following features 
+Data persistence was achived using Serialization with the ability to store data in two different file formats (JSON,XML). The output of this project is displayed in the java console, results are displayed in tabular format using IASCIITableAware. The application uses the MAVEN build framework. JUINT was used to develop test cases for the following features 
 
 + Create User Test
 + Get All Users
