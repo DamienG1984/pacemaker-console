@@ -21,7 +21,7 @@ import utils.XMLSerializer;
 
 public class Main
 {
-  public PacemakerAPI paceApi;
+  public PacemakerAPI paceApi; 
   
   @Command(description="Get all users details")
   public void ListUsers () 
