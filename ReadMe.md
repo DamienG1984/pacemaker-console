@@ -40,3 +40,13 @@ Data persistence was achived using Serialization with the ability to store data 
 + Get Location
 + Order by Test
 + Persistence Test
+
+### Components/Plugins
+
++ joda-time-2.4.jar
++ btc-ascii-table-1.0.jar
++ xstream-1.4.4.jar
++ stax-1.2.0.jar
++ jettison-1.3.7.jar
++ asg.cliche-110413.jar
++ guava-14.0.1.jar
