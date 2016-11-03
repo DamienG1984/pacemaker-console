@@ -2,7 +2,7 @@
 
 Name: Damien Griffin - 02028263
 
-### Overview
+### Objective
 Design and implement a simple Activity Tracker console (CLI) application.
 The application is to manage activities for multiple user accounts, enabling
 activities to be created, read, updated and deleted (CRUD). The application is to persist the user and activity data to a single file. Two file formats are to be supported: 
@@ -26,15 +26,19 @@ The application has the following Features:
 
 
 
-### User Features 
- 
- + View List of Resturants
- + Add Resturant
- + Add Review
- + Make A Reservation
- + Serach feature (Search box searchs all resturant objects for the text entered)
- + Order By Filter
- + Cuisine Filter
- + Confirmation Email
- + View Reservations
- + Delete Resturant
+### Overview
+Data persistence was achived using Serialization with the ability to store data in two different file formats (JSON,XML). The output of this project is displayed in the java console, results are displayed in tabular format using IASCIITableAware. The application uses the MAVEN build framework. 
+
+JUINT was used to develop test cases for the following features 
+
++ Create User Test
++ Get All Users
++ Get User by ID
++ Get User by Email
++ Deleting Users
++ Add Activity
++ List Activity
++ Create Location
++ Get Location
++ Order by Test
++ Persistence Test
