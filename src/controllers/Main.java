@@ -19,7 +19,7 @@ import utils.JSONSerializer;
 import utils.Serializer;
 import utils.XMLSerializer;
 
-public class Main
+public class Main 
 {
   public PacemakerAPI paceApi; 
   
